@@ -1,15 +1,12 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proceso de Registro</title>
-</head>
-<body>
-    <?php
+<?php
         if(isset($_POST['nombre']) && isset($_POST['clave']))
         {
+             if($_POST['nombre'] == 'admin'){
+                echo "<script>alert('Error no se pudo insertar el registro');</script>";
+                echo "<script>window.location='index.php';</script>";  
+                return;
+             };
+
             //verifico que no exista el usuario
             $sql = "SELECT *FROM usuarios where nombre = '".$_POST['nombre']."'";
             $sql = mysqli_query($con, $sql);
@@ -35,5 +32,16 @@
             echo "<script>window.location='index.php?modulo=procesar_registro';</script>";    
         }   
     ?>
-</body>
-</html>
+<section id="registro" class="section componente-centrado">
+    <h2>Registro</h2>
+    <form action="index.php?modulo=procesar_registro" method="POST">
+        
+        <label for="nombre">Nombre de Usuario:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        
+        <label for="clave">Contraseña:</label>
+        <input type="password" id="clave" name="clave" required>
+        
+        <button type="submit">Registrarse</button>
+    </form>
+</section>
