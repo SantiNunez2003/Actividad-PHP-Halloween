@@ -22,7 +22,7 @@ if(isset($_POST['nombre']) && isset($_POST['clave']))
             $_SESSION['nombre_usuario'] = $r['nombre'];
             echo "<script>alert('Bienvenido: ".$_SESSION['nombre_usuario']."');</script>";
             if($r['nombre'] == 'admin'){
-                echo "<script>window.location='index.php?modulo=admin';</script>";
+                echo "<script>window.location='index.php?modulo=admin&usuario=admin';</script>";
             }
         }
             else

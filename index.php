@@ -13,10 +13,15 @@
 <body>
     <nav>
         <ul>
-            <li><a href="index.php">Ver Disfraces</a></li>
-            <li><a href="index.php?modulo=procesar_registro">Registro</a></li>
-            <li><a href="index.php?modulo=procesar_login">Iniciar Sesión</a></li>
-            <li><a href="index.php?modulo=login">Panel de Administración</a></li>
+            <li><a href="index.php?&usuario='usuario'">Ver Disfraces</a></li>
+            <li><a href="index.php?modulo=procesar_registro&usuario='usuario'">Registro</a></li>
+            <li><a href="index.php?modulo=procesar_login&usuario='usuario'">Iniciar Sesión</a></li>
+            <?php 
+                if($_GET['usuario'] == 'admin'){
+                    echo("<li><a href='index.php?modulo=admin&usuario=admin''>Panel de Administración</a></li>");
+                };
+            ?>
+            
         </ul>
     </nav>
     <header>
