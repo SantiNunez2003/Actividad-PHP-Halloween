@@ -14,14 +14,9 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="index.php?&usuario='usuario'">Ver Disfraces</a></li>
-            <li><a href="index.php?modulo=procesar_registro">Registro</a></li>
-            <li><a href="index.php?modulo=procesar_login">Iniciar Sesión</a></li>
-            <li><a href='index.php?modulo=admin&usuario=admin'>Panel de Administración</a></li>       
-        </ul>
-    </nav>
+    <?php 
+        include_once("./php/components/navbar.php");
+    ?>
     <header>
         <h1>Concurso de disfraces de Halloween</h1>
         <?php 
@@ -36,9 +31,9 @@
     <main>
 
         <?php 
-            include_once("./php/components/navbar.php")
+            
 
-            if(!empty($_GET["modulo"])){
+            if(!empty($_GET['modulo'])){
                 
                 include("php/pages/$_GET[modulo].php");
 
@@ -59,7 +54,26 @@
 
                                 <h2><?php echo $r['nombre'];?></h2>
                                 <p><?php echo $r['descripcion'];?></p>
-                                <p>Votos: <?php echo $r['votos'];?></p>
+                                
+                                <?php 
+                                    //Consulta para contar los votos del disfraz específico
+                                    $cant_votos_query = "SELECT * FROM votos WHERE id_disfraz = " . $r['id'];
+                                    $cant_votos_result = mysqli_query($con, $cant_votos_query);
+
+                                    // Verifica si la consulta tuvo resultados
+                                    if ($cant_votos_result) {
+                                        $num_votos = mysqli_num_rows($cant_votos_result);
+
+                                        // Muestra el número de votos
+                                        if ($num_votos == 0) {
+                                            echo "<p>Votos: 0</p>";
+                                        } else {
+                                            echo "<p>Votos: " . $num_votos . "</p>";
+                                        }
+                                    } else {
+                                        echo "<p>Error en la consulta de votos.</p>";
+                                    }
+                                ?>
 
                                 <?php
                                 if(file_exists('imagenes/'.$r['foto'])){
